@@ -13,4 +13,9 @@ class Category extends Model
         return $this->hasMany(product::class, 'categories_id');
 
     }
+    protected $fillable = [
+    'name',
+    'description',
+    'is_active',
+];
 }

@@ -3,6 +3,10 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category; 
+use App\Http\Requests\StoreCategoriesRequest; 
+use App\Http\Requests\UpdateCategoriesRequest; 
+use App\Http\Resources\CategoriesResource; 
 use Illuminate\Http\Request;
 
 class CategoriesController extends Controller
@@ -12,15 +16,17 @@ class CategoriesController extends Controller
      */
     public function index()
     {
-        //
+        $categories = Category::all();
+        return CategoriesResource::collection($categories);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreCategoriesRequest $request)
     {
-        //
+        $category = Category::create($request->validated());
+        return new CategoriesResource($category);
     }
 
     /**
@@ -28,15 +34,19 @@ class CategoriesController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $category = Category::findOrFail($id);
+        return new CategoriesResource($category);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateCategoriesRequest $request, string $id)
     {
-        //
+        $category = Category::findOrFail($id);
+        $category->update($request->validated());
+        
+        return new CategoriesResource($category);
     }
 
     /**
@@ -44,6 +54,9 @@ class CategoriesController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $category = Category::findOrFail($id);
+        $category->delete();
+        
+        return response()->json(null, 204);
     }
 }

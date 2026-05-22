@@ -12,4 +12,14 @@ class Client extends Model
     public function orders(){
         return $this->hasMany(order::class, 'clients_id');
     }
+    protected $fillable = [
+    'firstname',
+    'lastname',
+    'email',
+    'phone',
+    'address',
+    'city',
+    'document_id',
+    'is_active',
+];
 }

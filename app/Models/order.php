@@ -12,5 +12,12 @@ class order extends Model
     public function client(){
         return $this->belongsTo(client::class, 'clients_id');
     }
-
+    protected $fillable = [
+    'clients_id',
+    'order_date',
+    'total_amount',
+    'status',
+    'payment_method',
+    'shipping_address',
+];
 }

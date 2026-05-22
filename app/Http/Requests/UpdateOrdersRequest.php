@@ -23,7 +23,12 @@ class UpdateOrdersRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'clients_id' => 'required|integer|exists:clients,id',
+            'order_date' => 'required|date',
+            'total_amount' => 'required|numeric|min:0',
+            'status' => 'required|string|in:pendiente,pagado,enviado,cancelado',
+            'payment_method' => 'required|string|max:100',
+            'shipping_address' => 'required|string|max:255',
         ];
     }
 }
